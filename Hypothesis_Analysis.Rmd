@@ -1,0 +1,120 @@
+---
+title: "Project"
+author: "Crystal Fan, Kristy Yu"
+date: "2023-02-25"
+output: html_document
+---
+```{r}
+library(dplyr)
+library(ggplot2)
+
+```
+
+```{r}
+Project <- read.csv("~/Documents/marketing580/project.csv")
+
+head(Project)
+```
+
+#H1: (with or without) VS conversion rate at store level
+```{r}
+chisq.test(Project$Label, Project$Purchased_Or_Not, correct=FALSE)
+```
+
+
+#H2: (with or without) VS conversion rate at dish level
+```{r}
+chisq.test(Project$Label, Project$Purchased_2, correct=FALSE)
+```
+
+#H3-1: (with_55 or without) VS conversion rate at dish level
+```{r}
+chisq.test(Project$Label1, Project$Purchased_2, correct=FALSE)
+```
+
+#H3-2: (with_70 or without) VS conversion rate at dish level
+```{r}
+chisq.test(Project$Label2, Project$Purchased_2, correct=FALSE)
+```
+
+#H3-3: (with_85 or without) VS conversion rate at dish level
+```{r}
+chisq.test(Project$Label3, Project$Purchased_2, correct=FALSE)
+```
+
+#H3-1: (with_55 or with_70) 
+```{r}
+H3_data1 = Project %>% filter(Label1 == 1|Label2 == 1)
+
+chisq.test(H3_data1$Label1, H3_data1$Purchased_2, correct=FALSE)
+```
+
+#H3-2: (with_55 or with_85) 
+```{r}
+H3_data2 = Project %>% filter(Label1 == 1|Label3 == 1)
+
+chisq.test(H3_data2$Label1, H3_data2$Purchased_2, correct=FALSE)
+```
+
+#H3-3: (with_70 or with_85) 
+```{r}
+H3_data3 = Project %>% filter(Label2 == 1|Label3 == 1)
+
+chisq.test(H3_data3$Label2, H3_data3$Purchased_2, correct=FALSE)
+```
+
+#H4: (with or without) VS conversion rate at dish level by income level
+```{r}
+H4 = glm(Purchased_2~Label*Income, data = Project)
+summary(H4)
+```
+
+
+#H5: (with or without) VS conversion rate at dish level by education level
+```{r}
+H5 = glm(Purchased_2~Label*Education, data = Project)
+summary(H5)
+```
+
+
+
+#H6: (with or without) VS conversion rate at dish level by frequency
+```{r}
+H6 = glm(Purchased_2~Label*ba1_1Frequency, data = Project)
+summary(H6)
+```
+
+
+#H7: (with or without) VS conversion rate at dish level by ethinical 
+```{r}
+H7 = glm(Purchased_2~Label*Ethnicity, data = Project)
+summary(H7)
+```
+
+
+#H8: (with or without) VS conversion rate at dish level by gender 
+```{r}
+H8 = glm(Purchased_2~Label*Gender, data = Project)
+summary(H8)
+```
+
+
+#H9: (with or without) VS conversion rate at dish level by age 
+```{r}
+H9 = glm(Purchased_2~Label*age_1, data = Project)
+summary(H9)
+```
+
+
+#H10: (with or without) VS conversion rate at dish level by marital 
+```{r}
+H10 = glm(Purchased_2~Label*marital, data = Project)
+summary(H10)
+```
+
+
+#H11(with or without) VS conversion rate at dish level by marital
+```{r}
+H11 = glm(Purchased_2~Label*sex_or, data = Project)
+summary(H11)
+```
